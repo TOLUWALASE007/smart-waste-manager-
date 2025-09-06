@@ -2,10 +2,10 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Smart Waste Manager - Register</title>
+    <title>Smart Waste Manager - Admin</title>
     <script>
-      // Redirect to the correct URL
-      window.location.replace('/smart-waste-manager-/register');
+      // Immediate redirect
+      window.location.replace('/smart-waste-manager-/admin');
     </script>
   </head>
   <body>
