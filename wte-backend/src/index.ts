@@ -9,21 +9,27 @@ const app: Express = express();
 const prisma = new PrismaClient();
 const PORT = process.env.PORT || 4000;
 
-// Test database connection
+// Test database connection (non-blocking)
 prisma.$connect()
   .then(() => {
     console.log('✅ Database connected successfully');
   })
   .catch((error) => {
     console.error('❌ Database connection failed:', error);
-    process.exit(1);
+    console.log('⚠️  Continuing without database connection...');
   });
 
 app.use(cors());
 app.use(express.json());
 
 // Health check
-app.get("/api/health", (_req, res) => res.json({ ok: true }));
+app.get("/api/health", (_req, res) => {
+  res.json({ 
+    ok: true, 
+    timestamp: new Date().toISOString(),
+    uptime: process.uptime()
+  });
+});
 
 // ---------- AUTH ROUTES ----------
 
@@ -144,6 +150,10 @@ app.use('*', (req, res) => {
 });
 
 // Start server with error handling
+console.log('🚀 Starting WTE Backend server...');
+console.log(`📊 Port: ${PORT}`);
+console.log(`🌍 Environment: ${process.env.NODE_ENV || 'development'}`);
+
 const server = app.listen(PORT, () => {
   console.log(`🚀 WTE Backend server running on port ${PORT}`);
   console.log(`📊 Health check: http://localhost:${PORT}/api/health`);
