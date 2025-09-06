@@ -1,0 +1,39 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model Site {
+  id     Int           @id @default(autoincrement())
+  name   String        @unique
+  wastes WasteReport[]
+}
+
+model WasteReport {
+  id           Int      @id @default(autoincrement())
+  siteId       Int
+  site         Site     @relation(fields: [siteId], references: [id])
+  wasteType    String
+  quantity     Float
+  unit         String
+  notes        String?
+  contactName  String
+  contactPhone String
+  status       String   @default("REPORTED")
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model AdminUser {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  password  String   // hashed password
+  createdAt DateTime @default(now())
+}
