@@ -66,7 +66,7 @@ export const API_ENDPOINTS = {
 } as const;
 
 // Base URL configuration
-export const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:4000';
+export const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://smart-waste-manager-production.up.railway.app';
 
 // Helper to build full URLs
 export function buildUrl(endpoint: string): string {
