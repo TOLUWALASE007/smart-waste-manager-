@@ -4,26 +4,21 @@
     <meta charset="utf-8">
     <title>Smart Waste Manager</title>
     <script>
-      // Check if we're on the wrong URL and redirect
+      // Handle all redirects
       var currentPath = window.location.pathname;
+      console.log('404 page - current path:', currentPath);
+      
       if (currentPath === '/worker' || currentPath === '/login' || currentPath === '/register' || currentPath === '/admin') {
-        // Redirect to the correct base URL
+        console.log('Redirecting to:', '/smart-waste-manager-' + currentPath);
         window.location.replace('/smart-waste-manager-' + currentPath);
       } else {
-        // GitHub Pages SPA routing fix
-        var pathSegmentsToKeep = 1;
-        var l = window.location;
-        l.replace(
-          l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') +
-          l.pathname.split('/').slice(0, 1 + pathSegmentsToKeep).join('/') + '/?/' +
-          l.pathname.slice(1).split('/').slice(pathSegmentsToKeep).join('/').replace(/&/g, '~and~') +
-          (l.search ? '&' + l.search.slice(1).replace(/&/g, '~and~') : '') +
-          l.hash
-        );
+        console.log('Redirecting to main app');
+        window.location.replace('/smart-waste-manager-/');
       }
     </script>
   </head>
   <body>
     <p>Redirecting to Smart Waste Manager...</p>
+    <p>If you are not redirected automatically, <a href="/smart-waste-manager-/">click here</a>.</p>
   </body>
 </html>

@@ -18,17 +18,16 @@
       if (currentPath === '/worker' || currentPath === '/login' || currentPath === '/register' || currentPath === '/admin') {
         // Redirect to the correct base URL
         window.location.replace('/smart-waste-manager-' + currentPath);
-        return;
+      } else {
+        // GitHub Pages SPA routing fix
+        (function() {
+          var redirect = sessionStorage.redirect;
+          delete sessionStorage.redirect;
+          if (redirect && redirect != location.href) {
+            history.replaceState(null, null, redirect);
+          }
+        })();
       }
-      
-      // GitHub Pages SPA routing fix
-      (function() {
-        var redirect = sessionStorage.redirect;
-        delete sessionStorage.redirect;
-        if (redirect && redirect != location.href) {
-          history.replaceState(null, null, redirect);
-        }
-      })();
     </script>
   </body>
 </html>
