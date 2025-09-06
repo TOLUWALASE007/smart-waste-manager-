@@ -9,6 +9,16 @@ const app: Express = express();
 const prisma = new PrismaClient();
 const PORT = process.env.PORT || 4000;
 
+// Test database connection
+prisma.$connect()
+  .then(() => {
+    console.log('✅ Database connected successfully');
+  })
+  .catch((error) => {
+    console.error('❌ Database connection failed:', error);
+    process.exit(1);
+  });
+
 app.use(cors());
 app.use(express.json());
 
@@ -133,18 +143,36 @@ app.use('*', (req, res) => {
   });
 });
 
-// Start server
-app.listen(PORT, () => {
+// Start server with error handling
+const server = app.listen(PORT, () => {
   console.log(`🚀 WTE Backend server running on port ${PORT}`);
   console.log(`📊 Health check: http://localhost:${PORT}/api/health`);
   console.log(`🔗 API endpoints ready!`);
 });
 
+// Handle server errors
+server.on('error', (error: any) => {
+  console.error('❌ Server error:', error);
+  if (error.code === 'EADDRINUSE') {
+    console.log(`Port ${PORT} is already in use`);
+  }
+});
+
 // Graceful shutdown
 process.on('SIGINT', async () => {
-  console.log('\n🛑 Shutting down server...');
-  await prisma.$disconnect();
-  process.exit(0);
+  console.log('\n🛑 Shutting down gracefully...');
+  server.close(async () => {
+    await prisma.$disconnect();
+    process.exit(0);
+  });
+});
+
+process.on('SIGTERM', async () => {
+  console.log('\n🛑 Received SIGTERM, shutting down gracefully...');
+  server.close(async () => {
+    await prisma.$disconnect();
+    process.exit(0);
+  });
 });
 
 export default app;
