@@ -1,14 +1,12 @@
 <!DOCTYPE html>
 <html>
-  <head>
+<head>
     <meta charset="utf-8">
-    <title>Smart Waste Manager - Login</title>
-    <script>
-      // Immediate redirect
-      window.location.replace('/smart-waste-manager-/login');
-    </script>
-  </head>
-  <body>
+    <title>Redirecting...</title>
+    <meta http-equiv="refresh" content="0; url=/smart-waste-manager-/login">
+</head>
+<body>
     <p>Redirecting to Smart Waste Manager...</p>
-  </body>
+    <p><a href="/smart-waste-manager-/login">Click here if not redirected</a></p>
+</body>
 </html>

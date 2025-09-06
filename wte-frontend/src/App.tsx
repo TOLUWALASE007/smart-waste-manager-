@@ -20,6 +20,7 @@ function App() {
             </ProtectedRoute>
           } 
         />
+        <Route path="/" element={<Navigate to="/worker" />} />
         <Route path="*" element={<Navigate to="/worker" />} />
       </Routes>
     </Router>
