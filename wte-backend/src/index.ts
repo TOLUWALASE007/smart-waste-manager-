@@ -1,11 +1,11 @@
 import "dotenv/config";
-import express from "express";
+import express, { Express } from "express";
 import cors from "cors";
 import { PrismaClient } from "@prisma/client";
 import { hashPassword, comparePassword, createToken } from "./utils/auth";
 import { requireAuth } from "./middleware/auth";
 
-const app = express();
+const app: Express = express();
 const prisma = new PrismaClient();
 const PORT = process.env.PORT || 4000;
 
